@@ -74,8 +74,13 @@ tasks.named<ShadowJar>("shadowJar") {
         exclude(dependency("org.checkerframework:"))
     }
 
+    // ACHTUNG: Die nachfolgende Zeile MUSS ENTFERNT/AUSKOMMENTIERT WERDEN:
+    // relocate("net.kyori.adventure", "com.plotsquared.core.configuration.adventure")
+
+    // Falls adventure-platform zwingend umbenannt werden soll, NUR das Platform-Modul relocaten:
+    relocate("net.kyori.adventure.platform", "com.plotsquared.core.configuration.adventure.platform")
+
     relocate("net.kyori.option", "com.plotsquared.core.configuration.option")
-    relocate("net.kyori.adventure", "com.plotsquared.core.configuration.adventure")
     relocate("net.kyori.examination", "com.plotsquared.core.configuration.examination")
     relocate("org.bstats", "com.plotsquared.metrics")
     relocate("org.enginehub", "com.plotsquared.squirrelid")
@@ -97,9 +102,7 @@ tasks.named<ShadowJar>("shadowJar") {
     relocate("edu.umd.cs.findbugs", "com.plotsquared.core.annotations.findbugs")
     relocate("com.intellectualsites.annotations", "com.plotsquared.core.annotations.informative")
 
-    // Get rid of all the libs which are 100% unused.
-    minimize()
-
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
     mergeServiceFiles()
 }
 
